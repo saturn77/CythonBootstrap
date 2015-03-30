@@ -1,12 +1,6 @@
 # CythonBootstrap
 
-
-Cython -- A Transcompiler Language
-====================================
-
 ## Transform Your Python !!
-
-### By James Bonanno, Central Ohio Python Presentation, March 2015
 
 There are many cases where you simply want to get speed up an existing Python design, and in particular code in Python to get things working, then optimize (yes, early optimization is the root of all evil, but it's even **more sinister** if you run out of ways to optimize your code.)
 
@@ -14,12 +8,14 @@ What is is good for?
 
   - for making Python faster,
   - for making Python faster in an easy way
-  - for wrapping external C and C++ 
+  - for wrapping external C and C++
   - making Python accessible to C and C++ (going the other way)
 
 This presentation is captured in an IPython / Jupyter Notebook for ease of use in working with the demos.
 
+The complete presentation can be quickly viewed at:
 
+This is the [Cython Bootstrap Presentation in Markdown](CythonBootstrap.ipynb).
 
 
 # Installation & Running
@@ -32,7 +28,7 @@ The main file to use is once you have Jupyter installled is
 
 **CythonBootstrap.ipynb**
 
-All of the other files in the design are generated from this main file. For example, all the .pyx and .c files are generated inside of the notebook file. 
+All of the other files in the design are generated from this main file. For example, all the .pyx and .c files are generated inside of the notebook file.
 
 Enjoy!
 
