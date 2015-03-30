@@ -1,11 +1,7 @@
 # CythonBootstrap
-IPython Notebook with Cython Presentation
 
-In order to run this presentation, you need the latest version of IPython / Jupyter Notebook installed
 
-git clone git@github.com:ipython/ipython.git
-
-Cython -- A Transcompiler Language    
+Cython -- A Transcompiler Language
 ====================================
 
 ## Transform Your Python !!
@@ -20,5 +16,23 @@ What is is good for?
   - for making Python faster in an easy way
   - for wrapping external C and C++ 
   - making Python accessible to C and C++ (going the other way)
-  
-#### This presentation seeks primarily to discuss ways to transform your Python code and use it in a Python project. 
+
+This presentation is captured in an IPython / Jupyter Notebook for ease of use in working with the demos.
+
+
+
+
+# Installation & Running
+
+In order to run this presentation, you need the latest version of IPython / Jupyter Notebook installed
+
+```git clone git@github.com:ipython/ipython.git```
+
+The main file to use is once you have Jupyter installled is
+
+**CythonBootstrap.ipynb**
+
+All of the other files in the design are generated from this main file. For example, all the .pyx and .c files are generated inside of the notebook file. 
+
+Enjoy!
+
