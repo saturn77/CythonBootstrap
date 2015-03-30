@@ -13,8 +13,6 @@ What is is good for?
 
 This presentation is captured in an IPython / Jupyter Notebook for ease of use in working with the demos.
 
-The complete presentation can be quickly viewed at:
-
 This is the [Cython Bootstrap Presentation in Markdown](CythonBootstrap.md).
 
 
