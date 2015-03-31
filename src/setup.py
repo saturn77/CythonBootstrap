@@ -5,9 +5,9 @@ from Cython.Build import cythonize
 #=========================================
 # Setup the extensions
 #=========================================
-sources = [ "cyMath.pyx", "helloCython.pyx",
-           "cy_math.pyx", "bits.pyx", 
-           "printString.pyx"]
+sources = [ "./src/cyMath.pyx", "./src/helloCython.pyx",
+           "./src/cy_math.pyx", "./src/bits.pyx", 
+           "./src/printString.pyx"]
 
 #for fileName in sources:
 #    setup(ext_modules=cythonize(str(fileName)))
