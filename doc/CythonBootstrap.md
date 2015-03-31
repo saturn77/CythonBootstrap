@@ -54,9 +54,8 @@ You must use "cdef" when defining a type inside of a function. For example,
 
 ```python
 def quad(int k):
-    cdef int index = 0
-    while index < k:
-        return index**2
+    cdef int alpha = 1.5
+    return alpha*(k**2)
 ```  
 
 People often get confused when using def, cdef, and cpdef.
@@ -111,7 +110,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
 ```
 
 
-    %%file helloCython.pyx
+    %%file ./src/helloCython.pyx
     
     import cython
     import sys 
@@ -120,6 +119,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
         print(" Hello World ....\n")
         print(" Hello Central Ohio Python User Group ...\n")
         print(" The 614 > 650::True")
+        print(" Another line ")
         print(" The Python version is %s" % sys.version)
         print(" The Cython version is %s" % cython.__version__)
         print(" I hope that you learn something useful . . . .")
@@ -127,11 +127,11 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
     def main():
         message()
 
-    Overwriting helloCython.pyx
+    Overwriting ./src/helloCython.pyx
 
 
 
-    %%file cyMath.pyx
+    %%file ./src/cyMath.pyx
     
     import cython
     
@@ -139,6 +139,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
         """Print the Fibonacci series up to n."""
         cdef int a = 0 
         cdef int b = 1
+        cdef int c = 0
         cdef int index = 0 
         while b < n:
             print ("%d, %d, \n" % (index, b) ) 
@@ -146,11 +147,11 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
             index += 1
 
 
-    Overwriting cyMath.pyx
+    Overwriting ./src/cyMath.pyx
 
 
 
-    %%file printString.pyx
+    %%file ./src/printString.pyx
     
     import cython
     
@@ -162,11 +163,11 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
         for byte in bytestring:
                 print(byte)  
 
-    Overwriting printString.pyx
+    Overwriting ./src/printString.pyx
 
 
 
-    %%file bits.pyx
+    %%file ./src/bits.pyx
     
     import cython
     
@@ -201,11 +202,11 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
                 y = y << 1
         return r
 
-    Overwriting bits.pyx
+    Overwriting ./src/bits.pyx
 
 
 
-    %%file setup.py
+    %%file ./src/setup.py
     
     from distutils.core import setup, Extension 
     from Cython.Build import cythonize
@@ -213,50 +214,50 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
     #=========================================
     # Setup the extensions
     #=========================================
-    sources = [ "cyMath.pyx", "helloCython.pyx",
-               "cy_math.pyx", "bits.pyx", 
-               "printString.pyx"]
+    sources = [ "./src/cyMath.pyx", "./src/helloCython.pyx",
+               "./src/cy_math.pyx", "./src/bits.pyx", 
+               "./src/printString.pyx"]
     
     #for fileName in sources:
     #    setup(ext_modules=cythonize(str(fileName)))
     
     map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
 
-    Overwriting setup.py
+    Overwriting ./src/setup.py
 
 
 
-    !python setup.py build_ext --inplace
+    !python ./src/setup.py build_ext --inplace
 
-    Compiling cyMath.pyx because it changed.
-    Cythonizing cyMath.pyx
+    Compiling ./src/cyMath.pyx because it changed.
+    Cythonizing ./src/cyMath.pyx
     running build_ext
-    building 'cyMath' extension
-    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c cyMath.c -o build/temp.linux-x86_64-2.7/cyMath.o
-    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/cyMath.o -o /home/james/public_sw/CythonBootstrap/cyMath.so
-    Compiling helloCython.pyx because it changed.
-    Cythonizing helloCython.pyx
+    building 'src.cyMath' extension
+    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c ./src/cyMath.c -o build/temp.linux-x86_64-2.7/./src/cyMath.o
+    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/./src/cyMath.o -o /home/james/public_sw/CythonBootstrap/src/cyMath.so
+    Compiling ./src/helloCython.pyx because it changed.
+    Cythonizing ./src/helloCython.pyx
     running build_ext
-    building 'helloCython' extension
-    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c helloCython.c -o build/temp.linux-x86_64-2.7/helloCython.o
-    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/helloCython.o -o /home/james/public_sw/CythonBootstrap/helloCython.so
+    building 'src.helloCython' extension
+    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c ./src/helloCython.c -o build/temp.linux-x86_64-2.7/./src/helloCython.o
+    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/./src/helloCython.o -o /home/james/public_sw/CythonBootstrap/src/helloCython.so
     running build_ext
-    Compiling bits.pyx because it changed.
-    Cythonizing bits.pyx
+    Compiling ./src/bits.pyx because it changed.
+    Cythonizing ./src/bits.pyx
     running build_ext
-    building 'bits' extension
-    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c bits.c -o build/temp.linux-x86_64-2.7/bits.o
-    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/bits.o -o /home/james/public_sw/CythonBootstrap/bits.so
-    Compiling printString.pyx because it changed.
-    Cythonizing printString.pyx
+    building 'src.bits' extension
+    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c ./src/bits.c -o build/temp.linux-x86_64-2.7/./src/bits.o
+    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/./src/bits.o -o /home/james/public_sw/CythonBootstrap/src/bits.so
+    Compiling ./src/printString.pyx because it changed.
+    Cythonizing ./src/printString.pyx
     running build_ext
-    building 'printString' extension
-    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c printString.c -o build/temp.linux-x86_64-2.7/printString.o
-    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/printString.o -o /home/james/public_sw/CythonBootstrap/printString.so
+    building 'src.printString' extension
+    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c ./src/printString.c -o build/temp.linux-x86_64-2.7/./src/printString.o
+    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/./src/printString.o -o /home/james/public_sw/CythonBootstrap/src/printString.so
 
 
 
-    import helloCython
+    from src import helloCython
     helloCython.message()
 
 
@@ -265,6 +266,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
      Hello Central Ohio Python User Group ...
     
      The 614 > 650::True
+     Another line 
      The Python version is 2.7.6 (default, Mar 22 2014, 22:59:56) 
     [GCC 4.8.2]
      The Cython version is 0.20.1post0
@@ -272,7 +274,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
 
 
 
-    import cyMath
+    from src import cyMath
     cyMath.cy_fib(100)
 
     0, 1, 
@@ -300,7 +302,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
 
 
 
-    import bits
+    from src import bits
     from bits import cy_reflect
     hexlist = [int(0x01),int(0x02),int(0x04),int(0x08)]
     [hex(cy_reflect(item,8)) for item in hexlist]
@@ -313,7 +315,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
 
 
 
-    import printString
+    from src import printString
     printString.display('123')
 
     49
@@ -340,7 +342,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
 ----------------------
 
 
-    %%file cyFib.pyx
+    %%file ./src/cyFib.pyx
     def cyfib(int n):
         cdef int a = 0
         cdef int b = 1
@@ -350,7 +352,7 @@ map(lambda fileName : setup(ext_modules=cythonize(str(fileName))), sources)
             index += 1
         return b
 
-    Overwriting cyFib.pyx
+    Overwriting ./src/cyFib.pyx
 
 
 # Introducing runcython !!
@@ -365,7 +367,7 @@ There is a runcython and makecython function calls . . . . .
 
 
 
-    !makecython cyFib.pyx
+    !makecython ./src/cyFib.pyx
 
 
     def pyfib(n):
@@ -380,15 +382,16 @@ There is a runcython and makecython function calls . . . . .
 
     %timeit pyfib(1000)
 
-    The slowest run took 5.33 times longer than the fastest. This could mean that an intermediate result is being cached 
-    1000000 loops, best of 3: 940 ns per loop
+    The slowest run took 9.67 times longer than the fastest. This could mean that an intermediate result is being cached 
+    1000000 loops, best of 3: 1.13 µs per loop
 
 
 
     import cyFib
     %timeit cyFib.cyfib(1000)
 
-    10000000 loops, best of 3: 61.8 ns per loop
+    The slowest run took 68.85 times longer than the fastest. This could mean that an intermediate result is being cached 
+    10000000 loops, best of 3: 58.9 ns per loop
 
 
 ### NOW THAT IS A CONSIDERABLE SPEEDUP  ... 
@@ -446,7 +449,7 @@ Let's take a look at disassembly for some reasons for this ....
        Ordered by: standard name
     
        ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-            1    0.000    0.000    0.000    0.000 <ipython-input-14-58766c9dec61>:1(pyfib)
+            1    0.000    0.000    0.000    0.000 <ipython-input-111-58766c9dec61>:1(pyfib)
             1    0.000    0.000    0.000    0.000 <string>:1(<module>)
             1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
     
@@ -471,15 +474,15 @@ where in the case below n is selected as 2, and
 The cython function to do this called "cypoly" while the python version is called "pypoly". Each function is defined with a functional programming techinque of lambda and map, as shown below. 
 
 
-    %%file cyPoly.pyx
+    %%file ./src/cyPoly.pyx
     def cypoly(int n, int k):
         map(lambda x:(1.0*x**2 + 0.5*x + 0.25*x), range(k))
 
-    Overwriting cyPoly.pyx
+    Overwriting ./src/cyPoly.pyx
 
 
 
-    !makecython cyPoly.pyx
+    !makecython ./src/cyPoly.pyx
 
 
     def pypoly(n,k):
@@ -488,18 +491,18 @@ The cython function to do this called "cypoly" while the python version is calle
 Now to compare the two ....
 
 
-    import cyPoly
+    from src import cyPoly
     %timeit cyPoly.cypoly(4,5000)
     %timeit pypoly(4,5000)
 
-    1000 loops, best of 3: 745 µs per loop
-    1000 loops, best of 3: 1.32 ms per loop
+    1000 loops, best of 3: 747 µs per loop
+    1000 loops, best of 3: 1.2 ms per loop
 
 
 ### Now's lets do something graphically, like plot a trig function. Let's also use a float/double type. 
 
 
-    %%file sineWave.pyx
+    %%file ./src/sineWave.pyx
     import cython 
     from libc.math cimport sin
     
@@ -509,14 +512,14 @@ Now to compare the two ....
         
         
 
-    Overwriting sineWave.pyx
+    Writing ./src/sineWave.pyx
 
 
 
-    !makecython sineWave.pyx
+    !makecython ./src/sineWave.pyx
 
 
-    import sineWave
+    from src import sineWave
     import math
     angle90 = math.pi/2
     sineWave.sinewave(angle90)
@@ -533,9 +536,6 @@ Now to compare the two ....
 
 
     %matplotlib inline
-    import matplotlib
-    
-    import matplotlib as plt
     import numpy as np
     
     x = np.linspace(0,2*np.pi,2000)
@@ -547,8 +547,8 @@ Now to compare the two ....
     title('Sinewave for Array Data')
     grid(True)
 
-    The slowest run took 48.31 times longer than the fastest. This could mean that an intermediate result is being cached 
-    1000 loops, best of 3: 771 µs per loop
+    The slowest run took 34.04 times longer than the fastest. This could mean that an intermediate result is being cached 
+    1000 loops, best of 3: 732 µs per loop
 
 
 
@@ -556,7 +556,7 @@ Now to compare the two ....
 
 
 
-    %%file myFunc.pyx
+    %%file ./src/myFunc.pyx
     
     import cython
     import numpy as np
@@ -567,16 +567,16 @@ Now to compare the two ....
     def myfunc(np.ndarray[double, ndim=1] A):
         return np.sin(A)
 
-    Overwriting myFunc.pyx
+    Writing ./src/myFunc.pyx
 
 
 
-    !makecython myFunc.pyx
+    !makecython ./src/myFunc.pyx
 
     In file included from /usr/include/python2.7/numpy/ndarraytypes.h:1761:0,
                      from /usr/include/python2.7/numpy/ndarrayobject.h:17,
                      from /usr/include/python2.7/numpy/arrayobject.h:4,
-                     from myFunc.c:352:
+                     from ./src/myFunc.c:352:
     /usr/include/python2.7/numpy/npy_1_7_deprecated_api.h:15:2: warning: #warning "Using deprecated NumPy API, disable it by " "#defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION" [-Wcpp]
      #warning "Using deprecated NumPy API, disable it by " \
       ^
@@ -584,9 +584,8 @@ Now to compare the two ....
 
 
     %matplotlib inline
-    import matplotlib
     
-    import myFunc
+    from src import myFunc
     import cython
     import numpy as np
     
@@ -599,8 +598,8 @@ Now to compare the two ....
     title('Sinewave for Array Data with Cython')
     grid(True)
 
-    The slowest run took 40.88 times longer than the fastest. This could mean that an intermediate result is being cached 
-    1000 loops, best of 3: 707 µs per loop
+    The slowest run took 38.84 times longer than the fastest. This could mean that an intermediate result is being cached 
+    1000 loops, best of 3: 672 µs per loop
 
 
 
@@ -626,3 +625,18 @@ Overall
  
 **Transform your Python with Cython !! **
 
+
+
+    !python-config --cflags
+
+    -I/usr/include/python2.7 -I/usr/include/x86_64-linux-gnu/python2.7  -fno-strict-aliasing -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security  -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes
+
+
+
+    !python-config --ldflags
+
+    -L/usr/lib/python2.7/config-x86_64-linux-gnu -L/usr/lib -lpthread -ldl  -lutil -lm  -lpython2.7 -Xlinker -export-dynamic -Wl,-O1 -Wl,-Bsymbolic-functions
+
+
+
+    
