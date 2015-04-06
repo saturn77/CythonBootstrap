@@ -20,7 +20,21 @@ This is the [Cython Bootstrap Presentation in Markdown](./doc/CythonBootstrap.md
 
 In order to run this presentation, you need the latest version of IPython / Jupyter Notebook installed
 
-```git clone git@github.com:ipython/ipython.git```
+$ git clone git@github.com:ipython/ipython.git
+
+$ python setup.py install
+
+$ python setupegg.py install
+
+Another way to install ipython is:
+
+$ git clone --recursive https://github.com/ipython/ipython.git
+
+$ cd ipython
+
+$ pip install -e ".[notebook]" --user
+
+
 
 The main file to use is once you have Jupyter installled is
 
